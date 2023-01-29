@@ -1,23 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import Main from "./layout/Main";
+import Category from "./Pages/Category/Category/Category";
+import Home from "./Pages/Home/Home/Home";
+import Login from "./Pages/Login/Login/Login";
+import Register from "./Pages/Login/Register/Register";
+import News from "./Pages/News/News/News";
+import Profile from "./Pages/Terms/Profile/Profile";
+import TermsAndCondition from "./Pages/Terms/TermsAndCondition/TermsAndCondition";
+import PrivateRoute from "./routes/route/PrivateRoute";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main></Main>,
+      children: [
+        {
+          path: "/",
+          element: <Home></Home>,
+          loader: () => fetch("http://localhost:5000/news"),
+        },
+        {
+          path: "/category/:id",
+          element: <Category></Category>,
+          loader: ({ params }) =>
+            fetch(`http://localhost:5000/category/${params.id}`),
+        },
+        {
+          path: "/news/:id",
+          element: (
+            <PrivateRoute>
+              <News></News>
+            </PrivateRoute>
+          ),
+          loader: ({ params }) =>
+            fetch(`http://localhost:5000/news/${params.id}`),
+        },
+        {
+          path: "/login",
+          element: <Login></Login>,
+        },
+        {
+          path: "/register",
+          element: <Register></Register>,
+        },
+        {
+          path: "/terms",
+          element: <TermsAndCondition></TermsAndCondition>,
+        },
+        {
+          path: "/profile",
+          element: (
+            <PrivateRoute>
+              <Profile></Profile>
+            </PrivateRoute>
+          ),
+        },
+      ],
+    },
+  ]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }
