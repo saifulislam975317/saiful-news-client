@@ -3,8 +3,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import useTitle from "../../../useTitle";
 
 const Register = () => {
+  useTitle("Register");
   const [error, setError] = useState("");
   const [accepted, setAccepted] = useState(false);
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ const Register = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, email, password);
+
     setError("");
     createUser(email, password)
       .then((result) => {

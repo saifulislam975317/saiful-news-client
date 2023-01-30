@@ -9,8 +9,10 @@ import News from "./Pages/News/News/News";
 import Profile from "./Pages/Terms/Profile/Profile";
 import TermsAndCondition from "./Pages/Terms/TermsAndCondition/TermsAndCondition";
 import PrivateRoute from "./routes/route/PrivateRoute";
+import useTitle from "./useTitle";
 
 function App() {
+  useTitle("Home");
   const router = createBrowserRouter([
     {
       path: "/",
@@ -19,13 +21,15 @@ function App() {
         {
           path: "/",
           element: <Home></Home>,
-          loader: () => fetch("http://localhost:5000/news"),
+          loader: () => fetch("https://saiful-news-server.vercel.app/news"),
         },
         {
           path: "/category/:id",
           element: <Category></Category>,
           loader: ({ params }) =>
-            fetch(`http://localhost:5000/category/${params.id}`),
+            fetch(
+              `https://saiful-news-server.vercel.app/category/${params.id}`
+            ),
         },
         {
           path: "/news/:id",
@@ -35,7 +39,7 @@ function App() {
             </PrivateRoute>
           ),
           loader: ({ params }) =>
-            fetch(`http://localhost:5000/news/${params.id}`),
+            fetch(`https://saiful-news-server.vercel.app/news/${params.id}`),
         },
         {
           path: "/login",

@@ -1,0 +1,17 @@
+.navbar-nav a {
+  text-decoration: none;
+  color: white;
+  padding: 5px;
+}
+.navbar-nav a:hover {
+  color: goldenrod;
+}
+
+span.navbar-brand a {
+  text-decoration: none;
+  color: goldenrod;
+}
+
+span.navbar-brand a:hover {
+  color: white;
+}
